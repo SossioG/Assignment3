@@ -1,37 +1,23 @@
 package model;
 
-public class Consumer {
-    private int totalNumberOfItems;
-    private int totalWeight;
-    private int totalVolume;
+public class Consumer extends Thread{
 
-    private Buffer<Integer> buffer;
+    private Buffer<FoodItem> foodItemBuffer;
 
-    public Consumer(int totalNumberOfItems, int totalWeight, int totalVolume) {
-        this.totalNumberOfItems = totalNumberOfItems;
-        this.totalWeight = totalWeight;
-        this.totalVolume = totalVolume;
+    public Consumer(Buffer<FoodItem> foodItemBuffer) {
+        this.foodItemBuffer = foodItemBuffer;
     }
 
-    // Getters and setters
-    public int getTotalNumberOfItems() {
-        return totalNumberOfItems;
-    }
-    public void setTotalNumberOfItems(int totalNumberOfItems) {
-        this.totalNumberOfItems = totalNumberOfItems;
-    }
-
-    public int getTotalWeight() {
-        return totalWeight;
-    }
-    public void setTotalWeight(int totalWeight) {
-        this.totalWeight = totalWeight;
+    public void run() {
+        System.out.println("Consumer runs!");
+        FoodItem foodItem;
+        while(!Thread.interrupted()) {
+            try {
+                foodItem = foodItemBuffer.get();
+            } catch (InterruptedException e) {
+                break;
+            }
+        }
     }
 
-    public int getTotalVolume() {
-        return totalVolume;
-    }
-    public void setTotalVolume(int totalVolume) {
-        this.totalVolume = totalVolume;
-    }
 }

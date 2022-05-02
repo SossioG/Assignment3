@@ -1,37 +1,39 @@
 package model;
 
-public class Producer {
-    private int totalNumberOfItems;
-    private int totalWeight;
-    private int totalVolume;
+public class Producer extends Thread{
 
-    private Buffer<Integer> buffer;
+    private Buffer<FoodItem> foodItemBuffer;
+    private Buffer<FoodProducer> foodProducerBuffer;
 
-    public Producer(int totalNumberOfItems, int totalWeight, int totalVolume) {
-        this.totalNumberOfItems = totalNumberOfItems;
-        this.totalWeight = totalWeight;
-        this.totalVolume = totalVolume;
-    }
+    private Thread thread;
 
-    // Getters and setters
-    public int getTotalNumberOfItems() {
-        return totalNumberOfItems;
-    }
-    public void setTotalNumberOfItems(int totalNumberOfItems) {
-        this.totalNumberOfItems = totalNumberOfItems;
+    public Producer(Buffer<FoodProducer> foodProducerBuffer, Buffer<FoodItem> foodItemBuffer) {
+        this.foodItemBuffer = foodItemBuffer;
+        this.foodProducerBuffer = foodProducerBuffer;
     }
 
-    public int getTotalWeight() {
-        return totalWeight;
-    }
-    public void setTotalWeight(int totalWeight) {
-        this.totalWeight = totalWeight;
+    public void start() {
+        thread = new Thread();
+        thread.start();
     }
 
-    public int getTotalVolume() {
-        return totalVolume;
+    @Override
+    public void run() {
+        System.out.println("Producer runs!");
+
+        FoodProducer foodProducer;
+
+        while(!Thread.interrupted()) {
+            try {
+                foodProducer = foodProducerBuffer.get();
+                for (int r = 0; r < foodProducer.size(); r++){ // antal gånger
+                    foodItemBuffer.put(foodProducer.nextFood()); // producera maten en efter en
+                }
+            } catch (InterruptedException e) {
+                break;
+            }
+        }
+
     }
-    public void setTotalVolume(int totalVolume) {
-        this.totalVolume = totalVolume;
-    }
+
 }

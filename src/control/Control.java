@@ -1,19 +1,14 @@
 package control;
 
-import model.Consumer;
-import model.FoodItem;
-import model.Producer;
+import model.FoodManager;
 import view.GUISemaphore;
 
 public class Control {
     private GUISemaphore view;
-
-    private Producer factory;
-    private FoodItem food;
-    private model.Buffer storage;
-    private Consumer truck;
+    private FoodManager foodManager;
 
     public Control() {
         view = new GUISemaphore(this);
+        foodManager = new FoodManager(this, view);
     }
 }
