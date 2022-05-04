@@ -4,33 +4,27 @@ import control.Control;
 import view.GUISemaphore;
 
 public class FoodManager implements FoodProducer{
-
     private Control control;
     private GUISemaphore view;
-
     private FoodItem[] foodItems;
     private int size = 5;
     private int currentIndex = -1;
-
-    private Producer factory;
-    private Buffer<FoodItem> foodItemBuffer;
-    private Buffer<FoodProducer> foodProducerBuffer;
-
+    private Producer producer;
+    private Buffer<FoodItem> foodItemBuffer = new Buffer<>();
+    private Buffer<FoodProducer> foodProducerBuffer = new Buffer<>();
     private model.Buffer storage;
     private Consumer truck;
 
     public FoodManager(Control control, GUISemaphore view) {
+        initFoodItems();
         this.control = control;
         this.view = view;
-
-        factory = new Producer(foodProducerBuffer, foodItemBuffer);
-
-        initFoodItems();
+        producer = new Producer(foodProducerBuffer, foodItemBuffer);
+        producer.startProducer();
     }
 
     private void initFoodItems() {
         foodItems = new FoodItem[size];
-
         foodItems[0] = new FoodItem(1.1,0.5,"Milk");
         foodItems[1] = new FoodItem(0.6,0.1,"Cream");
         foodItems[2] = new FoodItem(1.1,0.4,"Yoghurt");
@@ -45,6 +39,7 @@ public class FoodManager implements FoodProducer{
 
     @Override
     public FoodItem nextFood() {
+        System.out.println("next food called");
         if(size()==0)
             return null;
         currentIndex = (currentIndex+1) % foodItems.length;
