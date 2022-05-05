@@ -1,8 +1,6 @@
 package view;
 
 import control.Control;
-import model.Consumer;
-import model.FoodManager;
 import model.Producer;
 
 import java.awt.*;
@@ -214,11 +212,11 @@ public class GUISemaphore {
 		pnlICA.add(spane);
 		btnIcaStart = new JButton("Start Loading");
 		btnIcaStart.setBounds(118, 64, 120, 23);
-		btnIcaStart.addActionListener(l -> Producer.startIca());
+		//btnIcaStart.addActionListener(l -> Producer.startIca());
 		pnlICA.add(btnIcaStart);
 		btnIcaStop = new JButton("Stop");
 		btnIcaStop.setBounds(240, 64, 60, 23);
-		btnIcaStop.addActionListener(l -> Producer.stopIca());
+		//btnIcaStop.addActionListener(l -> Producer.stopIca());
 		pnlICA.add(btnIcaStop);
 		lblIcaStatus = new JLabel("Ica stop status here");
 		lblIcaStatus.setBounds(118, 16, 150, 23);
@@ -269,11 +267,11 @@ public class GUISemaphore {
 		pnlCOOP.add(spaneC);
 		btnCoopStart = new JButton("Start Loading");
 		btnCoopStart.setBounds(118, 64, 120, 23);
-		btnCoopStart.addActionListener(l -> Producer.startCoop());
+		//btnCoopStart.addActionListener(l -> Producer.startCoop());
 		pnlCOOP.add(btnCoopStart);
 		btnCoopStop = new JButton("Stop");
 		btnCoopStop.setBounds(240, 64, 60, 23);
-		btnCoopStop.addActionListener(l -> Producer.stopCoop());
+		//btnCoopStop.addActionListener(l -> Producer.stopCoop());
 		pnlCOOP.add(btnCoopStop);
 		lblCoopStatus = new JLabel("Coop stop status here");
 		lblCoopStatus.setBounds(118, 16, 150, 23);
@@ -324,11 +322,11 @@ public class GUISemaphore {
 		pnlCG.add(spaneG);
 		btnCGStart = new JButton("Start Loading");
 		btnCGStart.setBounds(118, 64, 120, 23);
-		btnCGStart.addActionListener(l -> Producer.startCG());
+		//btnCGStart.addActionListener(l -> Producer.startCG());
 		pnlCG.add(btnCGStart);
 		btnCGStop = new JButton("Stop");
 		btnCGStop.setBounds(240, 64, 60, 23);
-		btnCGStop.addActionListener(l -> Producer.stopCG());
+		//btnCGStop.addActionListener(l -> Producer.stopCG());
 		pnlCG.add(btnCGStop);
 		lblCGStatus = new JLabel("CITY GROSS stop status here");
 		lblCGStatus.setBounds(118, 16, 150, 23);
