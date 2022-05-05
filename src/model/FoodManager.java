@@ -3,46 +3,61 @@ package model;
 import control.Control;
 import view.GUISemaphore;
 
-public class FoodManager implements FoodProducer{
+import java.util.Random;
+
+public class FoodManager{
     private Control control;
     private GUISemaphore view;
-    private FoodItem[] foodItems;
-    private int size = 5;
-    private int currentIndex = -1;
     private Producer producer;
+
+    private FoodItem[] foodItems;
+    private final String[] ArrayProduct = {
+            "Milk",
+            "Loi",
+            "Beer",
+            "Tomato",
+            "Bif",
+    };
     private Buffer<FoodItem> foodItemBuffer = new Buffer<>();
-    private Buffer<FoodProducer> foodProducerBuffer = new Buffer<>();
-    private model.Buffer storage;
-    private Consumer truck;
 
     public FoodManager(Control control, GUISemaphore view) {
-        initFoodItems();
         this.control = control;
         this.view = view;
-        producer = new Producer(foodProducerBuffer, foodItemBuffer);
-        producer.startProducer();
+        initFoodItems();
+
+        Producer pr1 = new Producer(foodItems, foodItemBuffer);
+        pr1.setName("Scan");
+        Producer pr2 = new Producer(foodItems, foodItemBuffer );
+        pr2.setName("Arla");
+        Producer pr3 = new Producer(foodItems, foodItemBuffer );
+        pr3.setName("AxFood");
+
+
+        Consumer consumer1 = new Consumer(foodItemBuffer, "ICA");
+        consumer1.start();
+
+        Consumer consumer2 = new Consumer(foodItemBuffer, "COOP");
+        consumer2.start();
+
+        Consumer consumer3 = new Consumer(foodItemBuffer, "CITY GROSS");
+        consumer3.start();
+
+
     }
 
     private void initFoodItems() {
-        foodItems = new FoodItem[size];
-        foodItems[0] = new FoodItem(1.1,0.5,"Milk");
-        foodItems[1] = new FoodItem(0.6,0.1,"Cream");
-        foodItems[2] = new FoodItem(1.1,0.4,"Yoghurt");
-        foodItems[3] = new FoodItem(1.2,0.3,"Milkshake");
-        foodItems[4] = new FoodItem(1.3,0.2,"Apple");
+        foodItems = new FoodItem[]{
+            new FoodItem(1.2, 0.5, "Milk"),
+            new FoodItem(1.3, 0.9, "Apple"),
+            new FoodItem(3.9, 1.0, "Yoghurt"),
+            new FoodItem(2.9, 0.2, "Leachate"),
+            new FoodItem(1.3, 2.44, "Potato"),
+            new FoodItem(4.0, 2.12, "Chis"),
+            new FoodItem(6.1, 3.4, "Strawberry"),
+            new FoodItem(3.0, 0.02, "Bread"),
+            new FoodItem(8.2, 1.5, "Tomato"),
+            new FoodItem(1.5, 3.0, "Cream")};
     }
 
-    @Override
-    public int size() {
-        return size;
-    }
 
-    @Override
-    public FoodItem nextFood() {
-        System.out.println("next food called");
-        if(size()==0)
-            return null;
-        currentIndex = (currentIndex+1) % foodItems.length;
-        return foodItems[currentIndex];
-    }
 }

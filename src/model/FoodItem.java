@@ -4,6 +4,7 @@ public class FoodItem {
     private double weight;
     private double volume;
     private String name;
+    private int currentIndex = -1;
 
     public FoodItem(double weight, double volume, String name) {
         this.weight = weight;
@@ -11,24 +12,27 @@ public class FoodItem {
         this.name = name;
     }
 
-    // Getters and setters
+
     public double getWeight() {
         return weight;
     }
-    public void setWeight(int weight) {
+
+    public void setWeight(double weight) {
         this.weight = weight;
     }
 
     public double getVolume() {
         return volume;
     }
-    public void setVolume(int volume) {
+
+    public void setVolume(double volume) {
         this.volume = volume;
     }
 
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -41,4 +45,5 @@ public class FoodItem {
                 "Name: " + name + " ";
         return txt;
     }
+
 }
