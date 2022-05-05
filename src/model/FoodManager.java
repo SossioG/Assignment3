@@ -3,7 +3,7 @@ package model;
 import control.Control;
 import view.GUISemaphore;
 
-public class FoodManager implements FoodProducer{
+public class FoodManager implements FoodProducer {
 
     private Control control;
     private GUISemaphore view;
