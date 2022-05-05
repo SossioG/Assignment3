@@ -1,10 +1,11 @@
-
 package view;
 
 import control.Control;
+import model.Consumer;
+import model.FoodManager;
+import model.Producer;
 
 import java.awt.*;
-
 import javax.swing.*;
 
 /**
@@ -22,50 +23,35 @@ public class GUISemaphore {
 	private Control control;
 
 	//<editor-fold desc="Data for model.Producer Scan">
-	private JButton btnStartS;			// Button start Scan
-	private JButton btnStopS;			// Button stop Scan
-	private JLabel lblStatusS;			// Status Scan
+	private JButton btnStartScan, btnStopScan;
+	private JLabel lblStatusScan;
 	//</editor-fold>
 	//<editor-fold desc="Data for producer Arla">
-	private JButton btnStartA;			// Button start Arla
-	private JButton btnStopA;			// Button stop Arla
-	private JLabel lblStatusA;			// Status Arla
+	private JButton btnStartArla, btnStopArla;
+	private JLabel lblStatusArla;
 	//</editor-fold>
 	//<editor-fold desc="Data for producer AxFood">
-	private JButton btnStartX;			// Button start AxFood
-	private JButton btnStopX;			// Button stop AxFood
-	private JLabel lblStatusX;			// Status AxFood
+	private JButton btnStartAxFood, btnStopAxFood;
+	private JLabel lblStatusAxFood;
 	//</editor-fold>
 
 	//<editor-fold desc="Data for consumer ICA">
-	private JLabel lblIcaItems;			// Ica limits
-	private JLabel lblIcaWeight;
-	private JLabel lblIcaVolume;
-	private JLabel lblIcaStatus;		// load status
-	private JTextArea lstIca;			// The cargo list
-	private JButton btnIcaStart;		// The buttons
-	private JButton btnIcaStop;
-	private JCheckBox chkIcaCont;		// Continue checkbox
+	private JLabel lblIcaItems, lblIcaWeight, lblIcaVolume, lblIcaStatus;
+	private JTextArea lstIca;
+	private JButton btnIcaStart, btnIcaStop;
+	private JCheckBox chkIcaCont;
 	//</editor-fold>
 	//<editor-fold desc="Data for consumer COOP">
-	private JLabel lblCoopItems;
-	private JLabel lblCoopWeight;
-	private JLabel lblCoopVolume;
-	private JLabel lblCoopStatus;		// load status
-	private JTextArea lstCoop;			// The cargo list
-	private JButton btnCoopStart;		// The buttons
-	private JButton btnCoopStop;
-	private JCheckBox chkCoopCont;		// Continue checkbox
+	private JLabel lblCoopItems, lblCoopWeight, lblCoopVolume, lblCoopStatus;		// load status
+	private JTextArea lstCoop;
+	private JButton btnCoopStart, btnCoopStop;
+	private JCheckBox chkCoopCont;
 	//</editor-fold>
 	//<editor-fold desc="Data for consumer CITY GROSS">
-	private JLabel lblCGItems;
-	private JLabel lblCGWeight;
-	private JLabel lblCGVolume;
-	private JLabel lblCGStatus;			// load status
-	private JTextArea lstCG;			// The cargo list
-	private JButton btnCGStart;			// The buttons
-	private JButton btnCGStop;
-	private JCheckBox chkCGCont;		// Continue checkbox
+	private JLabel lblCGItems, lblCGWeight, lblCGVolume, lblCGStatus;
+	private JTextArea lstCG;
+	private JButton btnCGStart, btnCGStop;
+	private JCheckBox chkCGCont;
 	//</editor-fold>
 
 	/**
@@ -95,11 +81,13 @@ public class GUISemaphore {
 	 * Sets up the GUI with components
 	 */
 	private void InitializeGUI() {
+
 		// First create the three main panels
 		JPanel pnlBuffer = new JPanel();
 		pnlBuffer.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),"Storage"));
 		pnlBuffer.setBounds(13, 403, 693, 82);
 		pnlBuffer.setLayout(null);
+
 		// Then create the progressbar, only component in buffer panel
 		bufferStatus = new JProgressBar();
 		bufferStatus.setBounds(155, 37, 500, 23);
@@ -128,15 +116,17 @@ public class GUISemaphore {
 		pnlScan.setLayout(null);
 		
 		// Content Scan panel
-		btnStartS = new JButton("Start Producing");
-		btnStartS.setBounds(10, 59, 125, 23);
-		pnlScan.add(btnStartS);
-		btnStopS = new JButton("Stop");
-		btnStopS.setBounds(140, 59, 65, 23);
-		pnlScan.add(btnStopS);
-		lblStatusS = new JLabel("Staus Idle/Stop/Producing");
-		lblStatusS.setBounds(10, 31, 200, 13);
-		pnlScan.add(lblStatusS);
+		btnStartScan = new JButton("Start Producing");
+		btnStartScan.setBounds(10, 59, 125, 23);
+		btnStartScan.addActionListener(l -> Producer.startScan());
+		pnlScan.add(btnStartScan);
+		btnStopScan = new JButton("Stop");
+		btnStopScan.setBounds(140, 59, 65, 23);
+		btnStopScan.addActionListener(l -> Producer.stopScan());
+		pnlScan.add(btnStopScan);
+		lblStatusScan = new JLabel("Staus Idle/Stop/Producing");
+		lblStatusScan.setBounds(10, 31, 200, 13);
+		pnlScan.add(lblStatusScan);
 		// Add Scan panel to producers		
 		pnlProd.add(pnlScan);
 		
@@ -147,15 +137,17 @@ public class GUISemaphore {
 		pnlArla.setLayout(null);
 		
 		// Content Arla panel
-		btnStartA = new JButton("Start Producing");
-		btnStartA.setBounds(10, 59, 125, 23);
-		pnlArla.add(btnStartA);
-		btnStopA = new JButton("Stop");
-		btnStopA.setBounds(140, 59, 65, 23);
-		pnlArla.add(btnStopA);
-		lblStatusA = new JLabel("Staus Idle/Stop/Producing");
-		lblStatusA.setBounds(10, 31, 200, 13);
-		pnlArla.add(lblStatusA);
+		btnStartArla = new JButton("Start Producing");
+		btnStartArla.setBounds(10, 59, 125, 23);
+		btnStartArla.addActionListener(l -> Producer.startArla());
+		pnlArla.add(btnStartArla);
+		btnStopArla = new JButton("Stop");
+		btnStopArla.setBounds(140, 59, 65, 23);
+		btnStopArla.addActionListener(l -> Producer.stopArla());
+		pnlArla.add(btnStopArla);
+		lblStatusArla = new JLabel("Staus Idle/Stop/Producing");
+		lblStatusArla.setBounds(10, 31, 200, 13);
+		pnlArla.add(lblStatusArla);
 		// Add Arla panel to producers		
 		pnlProd.add(pnlArla);
 		
@@ -166,15 +158,17 @@ public class GUISemaphore {
 		pnlAxfood.setLayout(null);
 		
 		// Content AxFood Panel
-		btnStartX = new JButton("Start Producing");
-		btnStartX.setBounds(10, 59, 125, 23);
-		pnlAxfood.add(btnStartX);
-		btnStopX = new JButton("Stop");
-		btnStopX.setBounds(140, 59, 65, 23);
-		pnlAxfood.add(btnStopX);
-		lblStatusX = new JLabel("Staus Idle/Stop/Producing");
-		lblStatusX.setBounds(10, 31, 200, 13);
-		pnlAxfood.add(lblStatusX);
+		btnStartAxFood = new JButton("Start Producing");
+		btnStartAxFood.setBounds(10, 59, 125, 23);
+		btnStartAxFood.addActionListener(l -> Producer.startAxFood());
+		pnlAxfood.add(btnStartAxFood);
+		btnStopAxFood = new JButton("Stop");
+		btnStopAxFood.setBounds(140, 59, 65, 23);
+		pnlAxfood.add(btnStopAxFood);
+		lblStatusAxFood = new JLabel("Staus Idle/Stop/Producing");
+		lblStatusAxFood.setBounds(10, 31, 200, 13);
+		btnStopAxFood.addActionListener(l -> Producer.stopAxFood());
+		pnlAxfood.add(lblStatusAxFood);
 		// Add Axfood panel to producers		
 		pnlProd.add(pnlAxfood);
 		// model.Producer panel done, add to frame
@@ -186,8 +180,7 @@ public class GUISemaphore {
 		pnlICA.setBounds(19, 19,415, 100);
 		pnlICA.setLayout(null);
 		
-		// Content ICA panel
-		// First the limits panel
+		// ========== Content ICA panel ========== //
 		JPanel pnlLim = new JPanel();
 		pnlLim.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),"Package Limits"));
 		pnlLim.setBounds(6, 19, 107, 75);
@@ -211,6 +204,7 @@ public class GUISemaphore {
 		lblIcaVolume.setBounds(60, 50, 47, 13);
 		pnlLim.add(lblIcaVolume);
 		pnlICA.add(pnlLim);
+
 		// Then rest of controls
 		lstIca = new JTextArea();
 		lstIca.setEditable(false);
@@ -220,9 +214,11 @@ public class GUISemaphore {
 		pnlICA.add(spane);
 		btnIcaStart = new JButton("Start Loading");
 		btnIcaStart.setBounds(118, 64, 120, 23);
+		btnIcaStart.addActionListener(l -> Producer.startIca());
 		pnlICA.add(btnIcaStart);
 		btnIcaStop = new JButton("Stop");
 		btnIcaStop.setBounds(240, 64, 60, 23);
+		btnIcaStop.addActionListener(l -> Producer.stopIca());
 		pnlICA.add(btnIcaStop);
 		lblIcaStatus = new JLabel("Ica stop status here");
 		lblIcaStatus.setBounds(118, 16, 150, 23);
@@ -239,8 +235,7 @@ public class GUISemaphore {
 		pnlCOOP.setLayout(null);
 		pnlCons.add(pnlCOOP);
 		
-		// Content COOP panel
-		// First the limits panel
+		// ========== Content COOP panel ========== //
 		JPanel pnlLimC = new JPanel();
 		pnlLimC.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),"Package Limits"));
 		pnlLimC.setBounds(6, 19, 107, 75);
@@ -274,9 +269,11 @@ public class GUISemaphore {
 		pnlCOOP.add(spaneC);
 		btnCoopStart = new JButton("Start Loading");
 		btnCoopStart.setBounds(118, 64, 120, 23);
+		btnCoopStart.addActionListener(l -> Producer.startCoop());
 		pnlCOOP.add(btnCoopStart);
 		btnCoopStop = new JButton("Stop");
 		btnCoopStop.setBounds(240, 64, 60, 23);
+		btnCoopStop.addActionListener(l -> Producer.stopCoop());
 		pnlCOOP.add(btnCoopStop);
 		lblCoopStatus = new JLabel("Coop stop status here");
 		lblCoopStatus.setBounds(118, 16, 150, 23);
@@ -293,8 +290,7 @@ public class GUISemaphore {
 		pnlCG.setLayout(null);
 		pnlCons.add(pnlCG);
 		
-		// Content CITY GROSS panel
-		// First the limits panel
+		// ========== Content CITY GROSS panel ========== //
 		JPanel pnlLimG = new JPanel();
 		pnlLimG.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),"Package Limits"));
 		pnlLimG.setBounds(6, 19, 107, 75);
@@ -318,6 +314,7 @@ public class GUISemaphore {
 		lblCGVolume.setBounds(60, 50, 47, 13);
 		pnlLimG.add(lblCGVolume);
 		pnlCG.add(pnlLimG);
+
 		// Then rest of controls
 		lstCG = new JTextArea();
 		lstCG.setEditable(false);
@@ -327,9 +324,11 @@ public class GUISemaphore {
 		pnlCG.add(spaneG);
 		btnCGStart = new JButton("Start Loading");
 		btnCGStart.setBounds(118, 64, 120, 23);
+		btnCGStart.addActionListener(l -> Producer.startCG());
 		pnlCG.add(btnCGStart);
 		btnCGStop = new JButton("Stop");
 		btnCGStop.setBounds(240, 64, 60, 23);
+		btnCGStop.addActionListener(l -> Producer.stopCG());
 		pnlCG.add(btnCGStop);
 		lblCGStatus = new JLabel("CITY GROSS stop status here");
 		lblCGStatus.setBounds(118, 16, 150, 23);
@@ -343,4 +342,114 @@ public class GUISemaphore {
 		// Add consumer panel to frame
 		frame.add(pnlCons);
 	}
+
+	// ========== Getters and setters ========== //
+
+	public String getLblStatusScan() {
+		return lblStatusScan.getText();
+	}
+	public void setLblStatusScan(String lblStatusScan) {
+		this.lblStatusScan.setText(lblStatusScan);
+	}
+
+	public String getLblStatusArla() {
+		return lblStatusArla.getText();
+	}
+	public void setLblStatusArla(String lblStatusArla) {
+		this.lblStatusArla.setText(lblStatusArla);
+	}
+
+
+	public String getLblStatusAxFood() {
+		return lblStatusAxFood.getText();
+	}
+	public void setLblStatusAxFood(String lblStatusAxFood) {
+		this.lblStatusAxFood.setText(lblStatusAxFood);
+	}
+
+
+	public String getLblIcaItems() {
+		return lblIcaItems.getText();
+	}
+	public void setLblIcaItems(String lblIcaItems) {
+		this.lblIcaItems.setText(lblIcaItems);
+	}
+
+	public String getLblIcaWeight() {
+		return lblIcaWeight.getText();
+	}
+	public void setLblIcaWeight(String lblIcaWeight) {
+		this.lblIcaWeight.setText(lblIcaWeight);
+	}
+
+	public String getLblIcaVolume() {
+		return lblIcaVolume.getText();
+	}
+	public void setLblIcaVolume(String lblIcaVolume) {
+		this.lblIcaVolume.setText(lblIcaVolume);
+	}
+
+	public String getLblIcaStatus() {
+		return lblIcaStatus.getText();
+	}
+	public void setLblIcaStatus(String lblIcaStatus) {
+		this.lblIcaStatus.setText(lblIcaStatus);
+	}
+
+	public String getLblCoopItems() {
+		return lblCoopItems.getText();
+	}
+	public void setLblCoopItems(String lblCoopItems) {
+		this.lblCoopItems.setText(lblCoopItems);
+	}
+
+	public String getLblCoopWeight() {
+		return lblCoopWeight.getText();
+	}
+	public void setLblCoopWeight(String lblCoopWeight) {
+		this.lblCoopWeight.setText(lblCoopWeight);
+	}
+
+	public String getLblCoopVolume() {
+		return lblCoopVolume.getText();
+	}
+	public void setLblCoopVolume(String lblCoopVolume) {
+		this.lblCoopVolume.setText(lblCoopVolume);
+	}
+
+	public String getLblCoopStatus() {
+		return lblCoopStatus.getText();
+	}
+	public void setLblCoopStatus(String lblCoopStatus) {
+		this.lblCoopStatus.setText(lblCoopStatus);
+	}
+
+	public String getLblCGItems() {
+		return lblCGItems.getText();
+	}
+	public void setLblCGItems(String lblCGItems) {
+		this.lblCGItems.setText(lblCGItems);
+	}
+
+	public String getLblCGWeight() {
+		return lblCGWeight.getText();
+	}
+	public void setLblCGWeight(String lblCGWeight) {
+		this.lblCGWeight.setText(lblCGWeight);
+	}
+
+	public String getLblCGVolume() {
+		return lblCGVolume.getText();
+	}
+	public void setLblCGVolume(String lblCGVolume) {
+		this.lblCGVolume.setText(lblCGVolume);
+	}
+
+	public String getLblCGStatus() {
+		return lblCGStatus.getText();
+	}
+	public void setLblCGStatus(String lblCGStatus) {
+		this.lblCGStatus.setText(lblCGStatus);
+	}
+
 }
