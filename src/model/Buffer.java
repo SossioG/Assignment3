@@ -3,13 +3,17 @@ package model;
 import java.util.LinkedList;
 
 public class Buffer<T> {
-    private LinkedList<T> buffer = new LinkedList<T>();
+    private int size = 4;
+    private final LinkedList<T> buffer = new LinkedList<T>();
 
     // producer
-    public synchronized void put(T obj) {
+    public synchronized void put(T obj) throws InterruptedException {
         // produce data
-        buffer.addLast(obj);
-        notifyAll();
+        if (buffer.size() == size){
+            wait();
+        }else
+            buffer.addLast(obj);
+            notifyAll();
     }
 
     // consumer
@@ -23,6 +27,6 @@ public class Buffer<T> {
     }
 
     public int size() {
-        return buffer.size();
+        return size;
     }
 }
