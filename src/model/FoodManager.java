@@ -25,21 +25,26 @@ public class FoodManager{
         this.view = view;
         initFoodItems();
 
-        Producer pr1 = new Producer(foodItems, foodItemBuffer);
-        pr1.setName("Scan");
-        Producer pr2 = new Producer(foodItems, foodItemBuffer );
-        pr2.setName("Arla");
-        Producer pr3 = new Producer(foodItems, foodItemBuffer );
-        pr3.setName("AxFood");
+        Producer producer1 = new Producer(foodItems, foodItemBuffer, view);
+        producer1.setName("Scan");
+
+        Producer producer2 = new Producer(foodItems, foodItemBuffer, view);
+        producer2.setName("Arla");
+
+        Producer producer3 = new Producer(foodItems, foodItemBuffer, view);
+        producer3.setName("AxFood");
 
 
-        Consumer consumer1 = new Consumer(foodItemBuffer, "ICA");
+        Consumer consumer1 = new Consumer(foodItemBuffer, view);
+        consumer1.setName("ICA");
         consumer1.start();
 
-        Consumer consumer2 = new Consumer(foodItemBuffer, "COOP");
+        Consumer consumer2 = new Consumer(foodItemBuffer, view);
+        consumer2.setName("COOP");
         consumer2.start();
 
-        Consumer consumer3 = new Consumer(foodItemBuffer, "CITY GROSS");
+        Consumer consumer3 = new Consumer(foodItemBuffer, view);
+        consumer3.setName("CITY GROSS");
         consumer3.start();
 
 
