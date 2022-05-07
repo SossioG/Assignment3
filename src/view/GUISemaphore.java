@@ -1,6 +1,7 @@
 package view;
 
 import control.Control;
+import model.Consumer;
 import model.Producer;
 
 import java.awt.*;
@@ -109,7 +110,7 @@ public class GUISemaphore {
 		
 		// Now add the three panels to producer panel
 		JPanel pnlScan = new JPanel();
-		pnlScan.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),"model.Producer: Scan"));
+		pnlScan.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),"Scan"));
 		pnlScan.setBounds(6, 19, 217, 100);
 		pnlScan.setLayout(null);
 		
@@ -122,7 +123,7 @@ public class GUISemaphore {
 		btnStopScan.setBounds(140, 59, 65, 23);
 		btnStopScan.addActionListener(l -> Producer.stopScan());
 		pnlScan.add(btnStopScan);
-		lblStatusScan = new JLabel("Staus Idle/Stop/Producing");
+		lblStatusScan = new JLabel("Idle");
 		lblStatusScan.setBounds(10, 31, 200, 13);
 		pnlScan.add(lblStatusScan);
 		// Add Scan panel to producers		
@@ -130,7 +131,7 @@ public class GUISemaphore {
 		
 		// The Arla panel
 		JPanel pnlArla = new JPanel();
-		pnlArla.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),"model.Producer: Arla"));
+		pnlArla.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),"Arla"));
 		pnlArla.setBounds(6, 139, 217, 100);
 		pnlArla.setLayout(null);
 		
@@ -143,7 +144,7 @@ public class GUISemaphore {
 		btnStopArla.setBounds(140, 59, 65, 23);
 		btnStopArla.addActionListener(l -> Producer.stopArla());
 		pnlArla.add(btnStopArla);
-		lblStatusArla = new JLabel("Staus Idle/Stop/Producing");
+		lblStatusArla = new JLabel("Idle");
 		lblStatusArla.setBounds(10, 31, 200, 13);
 		pnlArla.add(lblStatusArla);
 		// Add Arla panel to producers		
@@ -151,7 +152,7 @@ public class GUISemaphore {
 		
 		// The AxFood Panel
 		JPanel pnlAxfood = new JPanel();
-		pnlAxfood.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),"model.Producer: AxFood"));
+		pnlAxfood.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),"AxFood"));
 		pnlAxfood.setBounds(6, 262, 217, 100);
 		pnlAxfood.setLayout(null);
 		
@@ -163,7 +164,7 @@ public class GUISemaphore {
 		btnStopAxFood = new JButton("Stop");
 		btnStopAxFood.setBounds(140, 59, 65, 23);
 		pnlAxfood.add(btnStopAxFood);
-		lblStatusAxFood = new JLabel("Staus Idle/Stop/Producing");
+		lblStatusAxFood = new JLabel("Idle");
 		lblStatusAxFood.setBounds(10, 31, 200, 13);
 		btnStopAxFood.addActionListener(l -> Producer.stopAxFood());
 		pnlAxfood.add(lblStatusAxFood);
@@ -174,7 +175,7 @@ public class GUISemaphore {
 		
 		// Next, add the three panels to model.Consumer panel
 		JPanel pnlICA = new JPanel();
-		pnlICA.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),"model.Consumer: ICA"));
+		pnlICA.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),"ICA"));
 		pnlICA.setBounds(19, 19,415, 100);
 		pnlICA.setLayout(null);
 		
@@ -192,13 +193,13 @@ public class GUISemaphore {
 		JLabel lblVolume = new JLabel("Volume:");
 		lblVolume.setBounds(7, 50, 50, 13);
 		pnlLim.add(lblVolume);
-		lblIcaItems = new JLabel("Data");
+		lblIcaItems = new JLabel("-");
 		lblIcaItems.setBounds(60, 20, 47, 13);
 		pnlLim.add(lblIcaItems);
-		lblIcaWeight = new JLabel("Data");
+		lblIcaWeight = new JLabel("-");
 		lblIcaWeight.setBounds(60, 35, 47, 13);
 		pnlLim.add(lblIcaWeight);
-		lblIcaVolume = new JLabel("Data");
+		lblIcaVolume = new JLabel("-");
 		lblIcaVolume.setBounds(60, 50, 47, 13);
 		pnlLim.add(lblIcaVolume);
 		pnlICA.add(pnlLim);
@@ -212,13 +213,13 @@ public class GUISemaphore {
 		pnlICA.add(spane);
 		btnIcaStart = new JButton("Start Loading");
 		btnIcaStart.setBounds(118, 64, 120, 23);
-		//btnIcaStart.addActionListener(l -> Producer.startIca());
+		btnIcaStart.addActionListener(l -> Consumer.startIca());
 		pnlICA.add(btnIcaStart);
 		btnIcaStop = new JButton("Stop");
 		btnIcaStop.setBounds(240, 64, 60, 23);
-		//btnIcaStop.addActionListener(l -> Producer.stopIca());
+		btnIcaStop.addActionListener(l -> Consumer.stopIca());
 		pnlICA.add(btnIcaStop);
-		lblIcaStatus = new JLabel("Ica stop status here");
+		lblIcaStatus = new JLabel("Idle");
 		lblIcaStatus.setBounds(118, 16, 150, 23);
 		pnlICA.add(lblIcaStatus);
 		chkIcaCont = new JCheckBox("Continue load");
@@ -228,7 +229,7 @@ public class GUISemaphore {
 		pnlCons.add(pnlICA);
 		
 		JPanel pnlCOOP = new JPanel();
-		pnlCOOP.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),"model.Consumer: COOP"));
+		pnlCOOP.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),"COOP"));
 		pnlCOOP.setBounds(19, 139, 415, 100);
 		pnlCOOP.setLayout(null);
 		pnlCons.add(pnlCOOP);
@@ -247,13 +248,13 @@ public class GUISemaphore {
 		JLabel lblVolumeC = new JLabel("Volume:");
 		lblVolumeC.setBounds(7, 50, 50, 13);
 		pnlLimC.add(lblVolumeC);
-		lblCoopItems = new JLabel("Data");
+		lblCoopItems = new JLabel("-");
 		lblCoopItems.setBounds(60, 20, 47, 13);
 		pnlLimC.add(lblCoopItems);
-		lblCoopWeight = new JLabel("Data");
+		lblCoopWeight = new JLabel("-");
 		lblCoopWeight.setBounds(60, 35, 47, 13);
 		pnlLimC.add(lblCoopWeight);
-		lblCoopVolume = new JLabel("Data");
+		lblCoopVolume = new JLabel("-");
 		lblCoopVolume.setBounds(60, 50, 47, 13);
 		pnlLimC.add(lblCoopVolume);
 		pnlCOOP.add(pnlLimC);
@@ -267,13 +268,13 @@ public class GUISemaphore {
 		pnlCOOP.add(spaneC);
 		btnCoopStart = new JButton("Start Loading");
 		btnCoopStart.setBounds(118, 64, 120, 23);
-		//btnCoopStart.addActionListener(l -> Producer.startCoop());
+		btnCoopStart.addActionListener(l -> Consumer.startCoop());
 		pnlCOOP.add(btnCoopStart);
 		btnCoopStop = new JButton("Stop");
 		btnCoopStop.setBounds(240, 64, 60, 23);
-		//btnCoopStop.addActionListener(l -> Producer.stopCoop());
+		btnCoopStop.addActionListener(l -> Consumer.stopCoop());
 		pnlCOOP.add(btnCoopStop);
-		lblCoopStatus = new JLabel("Coop stop status here");
+		lblCoopStatus = new JLabel("Idle");
 		lblCoopStatus.setBounds(118, 16, 150, 23);
 		pnlCOOP.add(lblCoopStatus);
 		chkCoopCont = new JCheckBox("Continue load");
@@ -283,7 +284,7 @@ public class GUISemaphore {
 		pnlCons.add(pnlCOOP);
 		
 		JPanel pnlCG = new JPanel();
-		pnlCG.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),"model.Consumer: CITY GROSS"));
+		pnlCG.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),"CITY GROSS"));
 		pnlCG.setBounds(19, 262, 415, 100);
 		pnlCG.setLayout(null);
 		pnlCons.add(pnlCG);
@@ -302,13 +303,13 @@ public class GUISemaphore {
 		JLabel lblVolumeG = new JLabel("Volume:");
 		lblVolumeG.setBounds(7, 50, 50, 13);
 		pnlLimG.add(lblVolumeG);
-		lblCGItems = new JLabel("Data");
+		lblCGItems = new JLabel("-");
 		lblCGItems.setBounds(60, 20, 47, 13);
 		pnlLimG.add(lblCGItems);
-		lblCGWeight = new JLabel("Data");
+		lblCGWeight = new JLabel("-");
 		lblCGWeight.setBounds(60, 35, 47, 13);
 		pnlLimG.add(lblCGWeight);
-		lblCGVolume = new JLabel("Data");
+		lblCGVolume = new JLabel("-");
 		lblCGVolume.setBounds(60, 50, 47, 13);
 		pnlLimG.add(lblCGVolume);
 		pnlCG.add(pnlLimG);
@@ -322,13 +323,13 @@ public class GUISemaphore {
 		pnlCG.add(spaneG);
 		btnCGStart = new JButton("Start Loading");
 		btnCGStart.setBounds(118, 64, 120, 23);
-		//btnCGStart.addActionListener(l -> Producer.startCG());
+		btnCGStart.addActionListener(l -> Consumer.startCG());
 		pnlCG.add(btnCGStart);
 		btnCGStop = new JButton("Stop");
 		btnCGStop.setBounds(240, 64, 60, 23);
-		//btnCGStop.addActionListener(l -> Producer.stopCG());
+		btnCGStop.addActionListener(l -> Consumer.stopCG());
 		pnlCG.add(btnCGStop);
-		lblCGStatus = new JLabel("CITY GROSS stop status here");
+		lblCGStatus = new JLabel("Idle");
 		lblCGStatus.setBounds(118, 16, 150, 23);
 		pnlCG.add(lblCGStatus);
 		chkCGCont = new JCheckBox("Continue load");
@@ -357,13 +358,15 @@ public class GUISemaphore {
 		this.lblStatusArla.setText(lblStatusArla);
 	}
 
-
 	public String getLblStatusAxFood() {
 		return lblStatusAxFood.getText();
 	}
 	public void setLblStatusAxFood(String lblStatusAxFood) {
 		this.lblStatusAxFood.setText(lblStatusAxFood);
 	}
+
+
+
 
 
 	public String getLblIcaItems() {
@@ -394,6 +397,9 @@ public class GUISemaphore {
 		this.lblIcaStatus.setText(lblIcaStatus);
 	}
 
+
+
+
 	public String getLblCoopItems() {
 		return lblCoopItems.getText();
 	}
@@ -421,6 +427,10 @@ public class GUISemaphore {
 	public void setLblCoopStatus(String lblCoopStatus) {
 		this.lblCoopStatus.setText(lblCoopStatus);
 	}
+
+
+
+
 
 	public String getLblCGItems() {
 		return lblCGItems.getText();
