@@ -56,6 +56,7 @@ public class Consumer extends Thread {
         CG = true;
     }
 
+    @Override
     public void run() {
         while(!Thread.interrupted()) {
             try {
@@ -64,11 +65,7 @@ public class Consumer extends Thread {
                 mutex = new Semaphore(1);
                 semaphore.acquire();
                 mutex.acquire();
-
-
-                // display to gui
-
-
+                System.out.println(Thread.currentThread().getName() + " Customer.");
             } catch (InterruptedException e) {
                 break;
             }
