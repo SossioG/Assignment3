@@ -2,9 +2,11 @@ package view;
 
 import control.Control;
 import model.Consumer;
+import model.FoodItem;
 import model.Producer;
 
 import java.awt.*;
+import java.util.ArrayList;
 import javax.swing.*;
 
 /**
@@ -429,8 +431,17 @@ public class GUISemaphore {
 	}
 
 
+	public void setLstCG(String item) {
+		this.lstCG.append(item + "\n");
+	}
 
+	public void setLstCoop(String item) {
+		this.lstCoop.append(item + "\n");
+	}
 
+	public void setLstIca(String item) {
+		this.lstIca.append(item + "\n");
+	}
 
 	public String getLblCGItems() {
 		return lblCGItems.getText();

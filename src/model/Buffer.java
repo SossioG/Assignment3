@@ -14,6 +14,7 @@ public class Buffer<T> {
 
         // produce data
         if (buffer.size() == size){
+            System.out.println("Buffer is full..");
             wait();
         }else
             buffer.addLast(obj);

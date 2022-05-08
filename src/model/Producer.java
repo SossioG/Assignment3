@@ -41,6 +41,7 @@ public class Producer extends Thread{
     public static void stopScan(){
         Scan = true;
     }
+
     public static void startAxFood(){
         AxFood = false;
     }
@@ -68,7 +69,6 @@ public class Producer extends Thread{
             switch (Thread.currentThread().getName()) {
                 case "AxFood":
                     if (!AxFood) {
-                        System.out.println(Thread.currentThread().getName() + " current thread");
                         produce(Thread.currentThread().getName());
                         view.setLblStatusAxFood(producing);
                     } else {
@@ -78,7 +78,6 @@ public class Producer extends Thread{
 
                 case "Scan":
                     if (!Scan) {
-                        System.out.println(Thread.currentThread().getName() + " current thread");
                         produce(Thread.currentThread().getName());
                         view.setLblStatusScan(producing);
                     } else {
@@ -88,7 +87,6 @@ public class Producer extends Thread{
 
                 case "Arla":
                     if (!Arla) {
-                        System.out.println(Thread.currentThread().getName() + " current thread");
                         produce(Thread.currentThread().getName());
                         view.setLblStatusArla(producing);
                     } else {
@@ -106,7 +104,6 @@ public class Producer extends Thread{
         System.out.println("-------------------------\n" +producerName +" Producing...");
         try {
             int pickTarget = random.nextInt(10);
-            System.out.println(producerName + " Picked product: " + foodItems[pickTarget].getName());
             foodItemBuffer.put(foodItems[pickTarget]);
 
             // display in gui
