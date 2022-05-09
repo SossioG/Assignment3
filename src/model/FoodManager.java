@@ -37,15 +37,12 @@ public class FoodManager{
 
         Consumer consumer1 = new Consumer(foodItemBuffer, view);
         consumer1.setName("ICA");
-        consumer1.start();
 
         Consumer consumer2 = new Consumer(foodItemBuffer, view);
         consumer2.setName("COOP");
-        consumer2.start();
 
         Consumer consumer3 = new Consumer(foodItemBuffer, view);
         consumer3.setName("CITY GROSS");
-        consumer3.start();
 
 
     }

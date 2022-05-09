@@ -10,6 +10,7 @@ public class Consumer extends Thread {
     private GUISemaphore view;
     Semaphore mutex;
     Semaphore semaphore;
+    FoodItem foodItem;
 
     String consuming = "Consuming";
     String idle = "Idle";
@@ -31,6 +32,7 @@ public class Consumer extends Thread {
     public Consumer(Buffer<FoodItem> foodItemBuffer, GUISemaphore view) {
         this.foodItemBuffer = foodItemBuffer;
         this.view = view;
+        start();
     }
 
     public static void startIca() {
@@ -54,105 +56,121 @@ public class Consumer extends Thread {
         CG = true;
     }
 
+    @Override
     public void run() {
-        System.out.println("-------------------------\n" + Thread.currentThread().getName() + " Taking...");
-        FoodItem foodItem;
         while(!Thread.interrupted()) {
-
             try {
                 Thread.sleep(1000);
                 semaphore = new Semaphore(4);
                 mutex = new Semaphore(1);
                 semaphore.acquire();
                 mutex.acquire();
-
-                foodItem = foodItemBuffer.get();
-
-                // display to gui
-                System.out.println(Thread.currentThread().getName() + " took: " +foodItem.getName());
-
+                System.out.println(Thread.currentThread().getName() + " Customer.");
             } catch (InterruptedException e) {
                 break;
             }
-
             switch(Thread.currentThread().getName()) {
                 case "ICA":
                     if(!Ica) {
-                        System.out.println(Thread.currentThread().getName() + " current thread");
-                        consume(Thread.currentThread().getName());
-                        view.setLblIcaStatus(consuming);
+                        FoodItem foodItem = null;
+                        try {
+                            foodItem = foodItemBuffer.get();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
 
-                        //view.setLblIcaItems();
-                        counterIcaWeight = counterIcaWeight + foodItem.getWeight();
-                        view.setLblIcaWeight(Double.toString(counterIcaWeight));
-
-                        counterIcaVolume = counterIcaVolume + foodItem.getVolume();
-                        view.setLblIcaVolume(Double.toString(counterIcaVolume));
-
+                        System.out.println("Ica run");
+                        displayInfoICA(foodItem, Thread.currentThread().getName());
                     } else {
                         view.setLblIcaStatus(idle);
-
-                        //view.setLblIcaWeight("-");
-                        //view.setLblIcaVolume("-");
                     }
-                break;
+                    break;
 
                 case "COOP":
                     if(!Coop) {
-                        System.out.println(Thread.currentThread().getName() + " current thread");
-                        consume(Thread.currentThread().getName());
-                        view.setLblCoopStatus(consuming);
+                        FoodItem foodItem = null;
+                        try {
+                            foodItem = foodItemBuffer.get();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        System.out.println("Coop run");
+                        displayInfoCOOP(foodItem, Thread.currentThread().getName());
 
-                        //view.setLblCoopItems();
-                        counterCoopWeight = counterCoopWeight + foodItem.getWeight();
-                        view.setLblCoopWeight(Double.toString(counterCoopWeight));
-
-                        counterCoopVolume = counterCoopVolume + foodItem.getVolume();
-                        view.setLblCoopVolume(Double.toString(counterCoopVolume));
                     } else {
                         view.setLblCoopStatus(idle);
-
-                        //view.setLblCoopWeight("-");
-                        //view.setLblCoopVolume("-");
                     }
-                break;
+                    break;
 
                 case "CITY GROSS":
                     if(!CG) {
-                        System.out.println(Thread.currentThread().getName() + " current thread");
-                        consume(Thread.currentThread().getName());
-                        view.setLblCGStatus(consuming);
+                        FoodItem foodItem = null;
+                        try {
+                            foodItem = foodItemBuffer.get();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        System.out.println("CG run");
+                        displayInfoCG(foodItem, Thread.currentThread().getName());
 
-                        //view.setLblCoopItems();
-                        counterCGWeight = counterCGWeight + foodItem.getWeight();
-                        view.setLblCGWeight(Double.toString(counterCGWeight));
-
-                        counterCGVolume = counterCGVolume + foodItem.getVolume();
-                        view.setLblCGVolume(Double.toString(counterCGVolume));
                     } else {
                         view.setLblCGStatus(idle);
-
-                        //view.setLblCGWeight("-");
-                        //view.setLblCGVolume("-");
                     }
-                break;
+                    break;
             }
+
             semaphore.release();
             mutex.release();
         }
     }
 
-    private void consume(String consumerName) {
-        System.out.println("-------------------------\n" + consumerName + " Consuming...");
-        try {
-            foodItemBuffer.get();
+    private void displayInfoCOOP(FoodItem foodItem, String name) {
+        System.out.println("-------------------------\n" + name + " Consuming...");
 
-            // display in gui
-            System.out.println(consumerName + " consumed: ");
+        view.setLblCoopStatus(consuming);
+        view.setLstCoop(foodItem.getName());
 
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        //view.setLblCoopItems();
+        counterCoopWeight = counterCoopWeight + foodItem.getWeight();
+        view.setLblCoopWeight(Double.toString(counterCoopWeight));
+
+        counterCoopVolume = counterCoopVolume + foodItem.getVolume();
+        view.setLblCoopVolume(Double.toString(counterCoopVolume));
+
+        System.out.println(name + " consumed: ");
+
     }
+    private void displayInfoICA(FoodItem foodItem, String name) {
+        System.out.println("-------------------------\n" + name + " Consuming...");
+
+        view.setLblIcaStatus(consuming);
+
+        view.setLstIca(foodItem.getName());
+
+        counterIcaWeight = counterIcaWeight + foodItem.getWeight();
+        view.setLblIcaWeight(Double.toString(counterIcaWeight));
+
+        counterIcaVolume = counterIcaVolume + foodItem.getVolume();
+        view.setLblIcaVolume(Double.toString(counterIcaVolume));
+
+        System.out.println(name + " consumed: ");
+
+    }
+    private void displayInfoCG(FoodItem foodItem, String name) {
+        System.out.println("-------------------------\n" + name + " Consuming...");
+
+        view.setLblCGStatus(consuming);
+        view.setLstCG(foodItem.getName());
+
+        counterCGWeight = counterCGWeight + foodItem.getWeight();
+        view.setLblCGWeight(Double.toString(counterCGWeight));
+
+        counterCGVolume = counterCGVolume + foodItem.getVolume();
+        view.setLblCGVolume(Double.toString(counterCGVolume));
+
+        System.out.println(name + " consumed: ");
+
+    }
+
 
 }
